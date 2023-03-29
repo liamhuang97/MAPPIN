@@ -15,5 +15,8 @@
     <string name="login">登入</string>
     <string name="txtv02">使用其他帳號登入</string>
     <string name="usernameview">用戶名稱</string>
-
+    <plurals name="member_count">
+        <item quantity="one">%1$d member</item>
+        <item quantity="other">%1$d members</item>
+    </plurals>
 </resources>

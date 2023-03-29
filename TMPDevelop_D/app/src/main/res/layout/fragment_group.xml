@@ -22,8 +22,8 @@
         android:layout_width="300dp"
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toStartOf="@+id/img_btn"
-        app:layout_constraintHorizontal_bias="0.64"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
@@ -31,16 +31,16 @@
         android:id="@+id/img_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/circle_background"
         android:contentDescription="@string/img_btn"
+        android:onClick="onImageButtonClick"
         android:src="@drawable/default_avatar"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        android:onClick="onImageButtonClick"/>
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TMPDevelop_D" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.TMPDevelop_D" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +12,20 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!-- Add these two lines to change the background and text color of the app label -->
+
+        <item name="android:actionBarStyle">@style/MyActionBar</item> <!-- Add this style to set the text color of the ActionBar title -->
+
+        <item name="android:windowBackground">#EEE6D7</item>
+        <item name="android:colorBackground">@color/white</item> <!-- Change the background color of the ActionBar -->
+        <item name="android:titleTextColor">#9BA07B</item> <!-- Change the text color of the ActionBar title -->
+
+    </style>
+
+
+    <!-- Add this style to set the text color of the ActionBar title -->
+    <style name="MyActionBar" parent="Widget.MaterialComponents.ActionBar.Primary">
+        <item name="titleTextColor">#9BA07B</item>
     </style>
 </resources>

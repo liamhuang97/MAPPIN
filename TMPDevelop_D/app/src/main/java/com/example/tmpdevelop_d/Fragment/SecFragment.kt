@@ -18,11 +18,16 @@ import com.google.firebase.ktx.Firebase
 
 class SecFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: RecyclerViewAdapter
+    private val userList = arrayListOf<Users>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sec, container, false)
         recyclerView = view.findViewById(R.id.recycle_friends)
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        adapter = RecyclerViewAdapter(userList)
+        recyclerView.adapter = adapter
 
         // Access a Cloud Firestore instance from your Activity
         val db = Firebase.firestore
@@ -30,23 +35,18 @@ class SecFragment : Fragment() {
         // Get the collection reference
         val usersRef = db.collection("users")
 
-        // Create an empty ArrayList to hold user data
-        val userList = arrayListOf<Users>()
-
         // Retrieve data from Firestore and populate ArrayList
         usersRef.get().addOnSuccessListener { result ->
-            val userList = arrayListOf<Users>()
+            userList.clear()
             for (document in result) {
                 val user = document.toObject(Users::class.java)
                 userList.add(user)
             }
-            recyclerView.adapter = RecyclerViewAdapter(userList)
+            adapter.notifyDataSetChanged()
         }.addOnFailureListener { exception ->
             Log.d(TAG, "Error getting documents: ", exception)
         }
 
-
         return view
-
     }
 }

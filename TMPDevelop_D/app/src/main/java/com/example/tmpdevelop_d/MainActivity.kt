@@ -39,14 +39,14 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_map -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, mapFragment).commit()
-                    return@setOnItemSelectedListener true
-                }
                 R.id.menu_groups -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, groupFragment).commit()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_map -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, mapFragment).commit()
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_costs -> {
@@ -57,5 +57,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        bottomNavigationView.selectedItemId = R.id.menu_map // 設置預設選中的項目
     }
 }
