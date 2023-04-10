@@ -65,7 +65,7 @@ class CreateGroupDialog : DialogFragment() {
             val creatorId = FirebaseAuth.getInstance().currentUser?.uid
             val photoUrl = groupImageUri?.toString() ?: DEFAULT_GROUP_IMAGE_URL
             val memberIds = selectedIds.toList()
-            val totalMembers = memberIds.size + 1 // 創建者也算一個成員
+            val totalMembers = System.currentTimeMillis().toInt()
 
             if (groupName.isNotEmpty() && creatorId != null) {
                 progressBar.visibility = View.VISIBLE
@@ -178,7 +178,9 @@ object FirestoreRepository {
     private val firestore = FirebaseFirestore.getInstance()
 
     fun getUsers(onResult: (List<Users>) -> Unit) {
-        firestore.collection("users")
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+        firestore.collection("Users")
+            .whereNotEqualTo("uid", currentUserUid)
             .get()
             .addOnSuccessListener { result ->
                 val userList = mutableListOf<Users>()

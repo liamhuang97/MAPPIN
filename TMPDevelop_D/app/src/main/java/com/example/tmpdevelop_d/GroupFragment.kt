@@ -1,5 +1,6 @@
 package com.example.tmpdevelop_d
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,6 +17,11 @@ class GroupFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
+    private lateinit var imgBtn: ImageButton
+
+    companion object {
+        const val REQUEST_CODE_ACCOUNT_ACTIVITY = 1
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,20 +35,24 @@ class GroupFragment : Fragment() {
         tabLayout = root.findViewById(R.id.tab_layout)
         tabLayout.setupWithViewPager(viewPager)
 
-        // 找到 ImageButton
-        val imageButton = root.findViewById<ImageButton>(R.id.img_btn)
-        // 設置點擊監聽器
-        imageButton.setOnClickListener {
+        imgBtn = root.findViewById(R.id.img_btn)
+        imgBtn.setOnClickListener {
             val intent = Intent(requireContext(), AccountActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_CODE_ACCOUNT_ACTIVITY)
         }
 
         return root
     }
 
-    companion object {
-        fun newInstance(): GroupFragment {
-            return GroupFragment()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_ACCOUNT_ACTIVITY && resultCode == Activity.RESULT_OK) {
+            // 获取选中图片的 Uri
+            val imageUri = data?.data
+            if (imageUri != null) {
+                // 设置 ImageButton 的图片
+                imgBtn.setImageURI(imageUri)
+            }
         }
     }
 }

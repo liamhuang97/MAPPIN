@@ -64,12 +64,15 @@ class SignupActivity : AppCompatActivity() {
                             // 註冊成功，取得目前的使用者帳號
                             val user = auth.currentUser
 
+                            // 取得 Firebase Auth 提供的 UID
+                            val uid = user?.uid
+
                             // 產生唯一的 User ID
                             val userID = generateUserID()
 
                             // 將新用戶存儲到 Firebase Firestore
-                            val newUser = Users(userID, username, imageUrl)
-                            firestore.collection("users").document(userID)
+                            val newUser = Users(userID, username, imageUrl, uid)
+                            firestore.collection("Users").document(userID)
                                 .set(newUser)
                                 .addOnSuccessListener {
                                     // 更新使用者帳號的顯示名稱
@@ -90,12 +93,19 @@ class SignupActivity : AppCompatActivity() {
                                                     .show()
                                                 // 重新導向回登入頁面
                                                 val intent =
-                                                    Intent(this@SignupActivity, LoginActivity::class.java)
+                                                    Intent(
+                                                        this@SignupActivity,
+                                                        LoginActivity::class.java
+                                                    )
                                                 startActivity(intent)
                                                 finish()
                                             } else {
                                                 // 顯示名稱更新失敗，顯示錯誤訊息
-                                                Log.d(TAG, "Failed to update user profile.", task.exception)
+                                                Log.d(
+                                                    TAG,
+                                                    "Failed to update user profile.",
+                                                    task.exception
+                                                )
                                                 Toast.makeText(
                                                     this@SignupActivity,
                                                     "註冊失敗，請稍後再試。",
@@ -103,9 +113,7 @@ class SignupActivity : AppCompatActivity() {
                                                 ).show()
                                             }
                                         }
-
                                 }
-
                         }
                     }
             }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tmpdevelop_d.Adapter.RecyclerViewAdapter
 import com.example.tmpdevelop_d.R
 import com.example.tmpdevelop_d.Users.Users
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -33,14 +34,17 @@ class SecFragment : Fragment() {
         val db = Firebase.firestore
 
         // Get the collection reference
-        val usersRef = db.collection("users")
+        val usersRef = db.collection("Users")
 
         // Retrieve data from Firestore and populate ArrayList
         usersRef.get().addOnSuccessListener { result ->
             userList.clear()
+            val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
             for (document in result) {
                 val user = document.toObject(Users::class.java)
-                userList.add(user)
+                if (user.uid != currentUserUid) {
+                    userList.add(user)
+                }
             }
             adapter.notifyDataSetChanged()
         }.addOnFailureListener { exception ->
